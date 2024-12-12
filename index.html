@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script LANGUAGE="JavaScript">
+        var date = new Date;
+        var charg_bef = date.getTime();
+        function Enter() {
+            date = new Date;
+            charg_aft = date.getTime();
+            window.idms.innerHTML = (charg_aft - charg_bef) / 1000;
+        }
+
+        function validateForm() {
+            var valid = true;
+            var fields = document.querySelectorAll('input[type="text"], select, input[type="date"]');
+            fields.forEach(function(field) {
+                if (field.value === '' || field.value === '0') {
+                    field.style.borderColor = 'red';  // Highlight the empty fields in red
+                    valid = false;
+                } else {
+                    field.style.borderColor = '';  // Reset to default if field is filled
+                }
+            });
+
+            if (!valid) {
+                alert('يرجى ملء جميع الحقول المطلوبة!');
+            }
+            return valid;
+        }
+
+        function handleDelete(id) {
+            var confirmation = confirm("هل أنت متأكد أنك تريد حذف هذا العنصر؟");
+            if (confirmation) {
+                console.log("Deleted item with ID:", id);
+            }
+        }
+
+        function handleEdit(id) {
+            var newValue = prompt("يرجى إدخال القيمة الجديدة:");
+            if (newValue) {
+                console.log("Edited item with ID:", id, "New value:", newValue);
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/icons.css">
+    <style>
+        body {
+            background-color: #276495;
+            font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+            font-size: 14px;
+            color: white;
+        }
+
+        table {
+            width: 95%;
+            margin: auto;
+            border-collapse: collapse;
+            background-color: #216DA9;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: right;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #1e4e7f;
+            color: white;
+        }
+
+        td input, td select {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+        }
+
+        td input[type="text"], td select {
+            background: #f2f2f2;
+        }
+
+        input[type="submit"], .button {
+            padding: 10px 20px;
+            background-color: #276495;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover, .button:hover {
+            background-color: #1e4e7f;
+        }
+
+        .alert-red {
+            background-color: red;
+            color: white;
+        }
+
+        .tbutton {
+            color: #fff;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-buttons button {
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn {
+            background-color: #f7770f;
+            color: white;
+        }
+
+        #textSearch {
+            background-color: #276495;
+            border: 2px solid #aaa;
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: 0.3s;
+            width: 50%;
+            height: 24px;
+        }
+
+        .fas.fa-search {
+            cursor: pointer;
+            color: #fff;
+        }
+    </style>
+</head>
+<body text="red" onLoad="Enter()">
+    <table>
+        <tr>
+            <td>
+                <input type="text" id="textSearch" name="find" value="" autocomplete="off">
+                <i class="fas fa-search tbutton" style="cursor: pointer;" OnClick="javascript: window.location='?find=' + window.textSearch.value + '&user=22&prs=11'" alt="Trouve" title="Trouve"></i>
+            </td>
+            <td align="right"></td>
+        </tr>
+    </table>
+
+    <form method="POST" class="forms" onsubmit="return validateForm()">
+        <input type="hidden" name="modules" value="detailfr">
+        <input type="hidden" name="fr" value="199944">
+        <table align="center" class="tablErp">
+            <caption style="font-size: 18px;">
+                <span style="color: yellow">T:</span> EZZIANE MOHAMED - <span style="color: yellow">F.R :</span>00010745 <span style="color: yellow">Unité :</span> EL KHEMIS <span style="color: yellow">Date :</span> 12/12/2024 <span style="color: yellow">Mactricule :</span> 00389-509-44 <span style="color: yellow">Chauffeur :</span> SAIB HADJ
+            </caption>
+            <tfoot style="text-align: right;">
+                <tr>
+                    <th colspan="13">
+                        <span style="color: yellow">Agent:</span> KHE <span style="color: yellow">Date & Haure:</span> 12/12/2024 09:21 : <span style="color: yellow">La page a été chargée en</span> <span id="idms">0.00s</span> <span style="color: yellow">seconde(s)</span>
+                    </th>
+                </tr>
+            </tfoot>
+            <thead>
+                <tr style="background: #1e4e7f; height: 12px;">
+                    <th>L.P N°</th>
+                    <th>Produit</th>
+                    <th>Qté</th>
+                    <th>Chargement</th>
+                    <th>Déchargement</th>
+                    <th>Qté Déch</th>
+                    <th>KM</th>
+                    <th>Date Déchar</th>
+                    <th>Operation</th>
+                    <th>Pes</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" name="lpn_1" value="" style="width: 100px;" class="required-field"/></td>
+                    <td align="right">
+                        <select name="produit_1" class="required-field">
+                            <option>-- Choix --</option>
+                            <option value="101">101 Blé dur</option>
+                            <option value="102" selected>102 Blé tendre</option>
+                        </select>
+                    </td>
+                    <td align="right"><input type="text" name="qte_1" value="0.00" style="width:60px;" class="required-field"/></td>
+                    <td align="right">
+                        <select name="charg_1" class="required-field">
+                            <option>-- Choix --</option>
+                            <option value="101003" selected>101003 PORT D'ALGER</option>
+                        </select>
+                    </td>
+                    <td align="right">
+                        <select name="decharg_1" class="required-field">
+                            <option>-- Choix --</option>
+                            <option value="101003">101003 PORT D'ALGER</option>
+                        </select>
+                    </td>
+                    <td align="right"><input type="text" name="qte_dech_new" style="width:60px;" class="required-field"/></td>
+                    <td align="right"><input type="text" name="km_new" style="width:50px;" class="required-field"/></td>
+                    <td align="right"><input type="date" name="date_d_new" class="required-field"/></td>
+                    <td align="right">
+                        <select name="operation_new" style="width: 150px;" class="required-field">
+                            <option value="">-- Choix --</option>
+                            <option value="6">Autres prest.</option>
+                        </select>
+                    </td>
+                    <td align="right"><input type="checkbox" name="pes_new" value="1"></td>
+                    <td align="right">
+                        <div class="action-buttons">
+                            <button type="button" class="edit-btn" onclick="handleEdit(1)">تعديل</button>
+                            <button type="button" class="delete-btn" onclick="handleDelete(1)">حذف</button>
+                            <button type="button" class="btn" onclick="handle"></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <input class="button" type="submit" name="save" value="Mise à jour"> 
+        <a href="?action=list&user=22&prs=11" class="button" style="text-decoration: none;"> Liste Feuille de Route </a>
+    </form>
+
+    <script>
+        function checkRowCompletion(row) {
+            let allFilled = true;
+            row.querySelectorAll('input.required-field, select.required-field').forEach(function(input) {
+                if (input.value === '' || input.value === '0' || (input.type === 'checkbox' && !input.checked)) {
+                    allFilled = false;
+                }
+            });
+
+            const btn = row.querySelector('.btn');
+            if (btn) {
+                if (allFilled) {
+                    btn.style.backgroundColor = 'green';  // Green if all fields are filled
+                } else {
+                    btn.style.backgroundColor = 'yellow';  // Yellow if some fields are empty
+                }
+            }
+        }
+
+        document.querySelectorAll('.required-field').forEach(function(field) {
+            field.addEventListener('input', function() {
+                const row = field.closest('tr');
+                checkRowCompletion(row);  // Check the row completion status
+            });
+        });
+    </script>
+</body>
+</html>
